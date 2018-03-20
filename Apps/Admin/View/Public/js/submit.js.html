@@ -1,0 +1,32 @@
+<script>
+//添加修改表单提交
+var type='{$type|default="add"}';
+$('#submit').linkbutton({
+	onClick:function(){
+		$('#ff').form('submit', {    
+		    url:'__SELF__',    
+		    onSubmit: function(param){    
+		          var isvalidate=$(this).form('validate');
+		          return isvalidate;
+		    },    
+		    success:function(data){		    	 
+		   		var data=eval('('+data + ')');
+		   		if(data.code<10){
+		   			if(type=='add'){
+		   				$('#win').window('refresh');
+		   			}else{
+		   				$('#win').window('close');
+		   			}
+		   			
+		   		}else{
+		   			layer.msg(data.msg);  
+		   		}
+		        
+		   		 
+		    }    
+		});  
+
+		
+	}
+});
+</script>

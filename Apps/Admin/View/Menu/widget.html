@@ -1,0 +1,14 @@
+{__NOLAYOUT__}
+
+<foreach name="data" item="v" key="k">
+	<div title="{$k}" data-options="iconCls:'icon-{$v['icon']}'" style="padding:10px;">
+		<ul>
+			<foreach name="v" item="v1">
+				 <li>
+					 <a href='{$v1.url}' data-icon='{$v1.icon}'><img src='{$v1.img}' style='width:16px;'/> {$v1.title} </a>
+				 </li> 
+			
+			</foreach>
+		</ul>
+	</div>
+</foreach>

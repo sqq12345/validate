@@ -1,0 +1,21 @@
+{//角色}
+
+<table id='tab' class="easyui-datagrid"  data-options="url:'{:U('group/getdb')}',fitColumns:true,singleSelect:true,toolbar: '#tool'
+">
+    <thead>
+        <tr>
+            <th data-options="field:'id',width:100">ID</th> 
+            <th data-options="field:'ctime',width:100">添加时间</th>
+            <th data-options="field:'utime',width:100">修改时间</th>
+            <th data-options="field:'title',width:100">角色名称</th>                
+            <th data-options="field:'level',width:100">动作权限</th>
+            
+        </tr>
+    </thead>
+</table>
+
+<div id="tool">
+    <a id='addbtn' class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" >添加</a>
+    <a id='editbtn' class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" >修改</a>
+    <a id='delbtn' class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">删除</a>
+</div>

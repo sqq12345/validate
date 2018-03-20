@@ -1,0 +1,25 @@
+{//用户}
+
+<table id='tab' class="easyui-datagrid"  data-options="url:'{:U('user/getdb')}',pagination:true,fitColumns:true,singleSelect:true,toolbar: '#tool'">
+    <thead>
+        <tr>
+            <th data-options="field:'id',width:100">ID</th> 
+            <th data-options="field:'ctime',width:100">添加时间</th>
+            <th data-options="field:'utime',width:100">修改时间</th>
+            <th data-options="field:'title',width:100">用户名</th>                
+            <th data-options="field:'nkname',width:100">呢称</th>
+            <th data-options="field:'email',width:100">邮箱</th>
+            <th data-options="field:'title',width:100">用户组</th>
+            <th data-options="field:'lastlogin',width:100">上次登录时间</th>
+            <th data-options="field:'lastip',width:100">上次登录IP</th>
+            
+        </tr>
+    </thead>
+</table>
+
+<div id="tool">
+    <a id='addbtn' class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" >添加</a>
+    <a id='editbtn' class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" >修改</a>
+    <a id='delbtn' class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">删除</a>
+</div> 
+

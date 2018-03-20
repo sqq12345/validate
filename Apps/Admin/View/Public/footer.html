@@ -1,0 +1,77 @@
+ <script>
+
+ /**
+  *  显示窗口
+  */
+ function showWin(url,width,height){
+	 width=width?width:600;
+	 height=height?height:400;
+	 $('#win').window({
+		 width:width,
+		 heigth:height,
+		 
+	 });
+ 	$('#win').window('refresh', url);  
+ 	$('#win').window('open'); 
+ 	
+ }
+ 
+//当win关闭时刷新tab
+ $('#win').window({
+ 	onClose:function(){
+ 		$('#tab').datagrid('reload');
+ 		
+ 	}
+ });
+
+ //删除按钮
+ $('#delbtn').linkbutton({
+     onClick: function () {
+         var currow = $('#tab').datagrid("getSelected");
+         if (currow != null) {
+         	
+         	layer.confirm('确定要删除吗？删除后不可恢复。', {icon:3,title: '删除'}, 
+     		function(index){
+         		var url = "__CONTROLLER__/del/id/" + currow.id;
+         		
+         		$.post(url,function(data){
+         			 							  	    			    	
+ 			    	layer.msg(data.msg);  
+ 			    	$('#tab').datagrid('reload');
+         			
+         		},'json');
+         		layer.close(index);
+         		
+     		});
+         } else {
+             $.messager.alert('错了', "请先选中一行！", 'warning');
+         }
+     }
+ }); 
+
+ //修改按钮
+  $('#editbtn').linkbutton({
+     onClick: function () {
+         var currow = $('#tab').datagrid("getSelected");
+         if (currow != null) {
+         	var url = "__CONTROLLER__/edit/id/" + currow.id;
+         	showWin(url);
+         } else {
+             $.messager.alert('错了', "请先选中一行！", 'warning');
+         }
+     }
+ }); 
+ //添加按钮
+ $('#addbtn').linkbutton({
+ 	onClick:function(){
+ 		var url="{:U('add')}";
+ 		showWin(url);
+ 	}
+ 	
+ });
+
+
+
+ </script>
+</body>
+</html>

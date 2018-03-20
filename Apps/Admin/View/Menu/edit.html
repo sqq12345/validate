@@ -1,0 +1,87 @@
+{/*添加菜单项*/}
+ {__NOLAYOUT__}
+
+    <form id="ff" method="post" >
+        <p>
+            <label>名称:</label>
+            <input class="easyui-textbox" type="text" name="title" value="{$row.title}" data-options="width:220,height:28,required:true," />
+        </p>
+        <p>
+            <label>所属类别:</label>
+            <select class="easyui-combobox" name='pid' data-options="width:220,height:28">
+                <option value='0'>顶级分类</option>
+                <foreach name='titles' item='v'>
+                    <eq name="v.id" value="$row.pid">
+                        <option value='{$v.id}' selected>{$v.title}</option>
+                    <else/>
+                        <option value='{$v.id}'>{$v.title}</option>
+                    </eq>
+                   
+                </foreach>
+            </select>
+        </p>
+      
+        <p>
+            <label >操作:</label>
+            <select class="easyui-combobox" name='aid' data-options="width:220,height:28">
+                <option value='0'>无</option>
+                <foreach name='actions' item='v'>
+                     
+                    <eq name="v.id" value="$row.aid">
+                        <option value='{$v.id}' selected>{$v.title}</option>
+                    <else/>
+                        <option value='{$v.id}'>{$v.title}</option>
+                    </eq>
+                </foreach>
+            </select>           
+        </p>
+        
+        <p>
+            <label >隐藏:</label>
+            <eq name='row.hidden' value='1'>
+            	<input class="easyui-switchbutton" value='1' name='hidden' data-options="onText:'Yes',offText:'No',checked:true">  
+            <else />
+            	<input class="easyui-switchbutton" value='1' name='hidden' data-options="onText:'Yes',offText:'No'">     
+            </eq>
+          
+        </p>  
+         <p>
+            <label >排序:</label>
+            <input class="easyui-textbox" type="text" name="sort" value='{$row.sort}' data-options="width:220,height:28" />       
+        </p>   
+         <p>
+            <label >图标:</label>            
+            <input id="icons"  class="easyui-combobox" name="icon" value="{$row.icon}"  data-options="width:220,height:28,valueField:'name',textField:'name',url:'{:U('getIcons')}'" /> 
+            <span id='iconimg' style="margin-left:20px;margin-top:5px;"></span>   
+        </p>       
+        <p>
+            <label >备注:</label>
+            <input class="easyui-textbox" type="text" name="remark"  value="{$row.remark}" data-options="multiline:true,width:220,height:28" />
+        </p>
+        <p>
+            <label> </label>
+             <a id='submit' class="easyui-linkbutton" data-options="iconCls:'icon-ok'" >提交</a>
+        </p>
+    </form>
+    <script>
+    
+    	$('#icons').combobox({
+    		onChange:function(nvalue,ovalue){    			
+    			 geticon(nvalue);
+    		}
+    	});
+    	
+    	function geticon(_name){
+    		if(_name.length>0){
+	    		 $.post("{:U('getIconImg')}",{value:_name},function(msg){
+					 $('#iconimg').html("<img src='"+msg+"' style='width:16px;'/>");
+				 });
+    		}
+    	}
+    	
+    	$('#icons').combobox('select','{$row.icon}');
+    	
+    	geticon('{$row.icon}');
+    	//alert($('#icons').combobox('getValue'));
+    </script>
+  	<include file="public:js:submit.js" />

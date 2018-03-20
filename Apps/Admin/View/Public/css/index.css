@@ -1,0 +1,35 @@
+body{font-size:14px; font-family:Tahoma,Verdana,"微软雅黑","新宋体";}
+a{ color:Black; text-decoration:none;}
+ul{list-style:none;}
+img{border:0;}
+form>div{margin:10px 0;}
+form label{float:left;width:100px;padding:0 10px;text-align:right;}
+form .easyui-linkbutton{margin-left:200px;}
+#submit{float:right;margin-right:100px;}
+.easyui-accordion ul{list-style-type:none;margin:0px; padding:10px;}
+.easyui-accordion ul li{ padding:0 10px;}
+.easyui-accordion ul li a{display:block;line-height:24px;}
+.easyui-accordion ul li div{margin:2px 0px;padding-left:10px;padding-top:2px;}
+.easyui-accordion ul li:hover{border:1px dashed #99BBE8; background:#E0ECFF;cursor:pointer;}
+.easyui-accordion ul li:hover a{color:#416AA3;}
+.easyui-accordion ul li.selected{border:1px solid #99BBE8; background:#E0ECFF;cursor:default;}
+.easyui-accordion ul li.selected a{color:#416AA3; font-weight:bold;}
+ 
+
+ul.actions{width:400px;margin-left:100px;}
+ul.actions li{float:left;width:100px;margin:5px 0;}
+.uploadimages{overflow:hidden;list-style:none;padding:10px;}
+.uploadimages li{float:left;width:100px;height:100px;margin-left:10px;border:1px #333333 solid;padding:0;position:relative;}
+.uploadimages li>img{height:100px;width:100px;}
+.uploadimages li div{width:100px;height:100px;position:absolute;left:0;top:0;display:none;background:rgba(150,150,150,0.5);}
+.uploadimages li div img{width:30px;height:30px;position:absolute;top:-15px;right:-10px;}
+.uploadimages li:hover div{display:block;}
+
+
+.header { height:55px; position:relative; z-index:0; overflow:hidden; border-bottom:1px #95b8e7 solid; background:url(../img/bg_header.jpg) bottom repeat-x;}
+.header-left { position:absolute; z-index:1; left:15px; top:0;}
+.header-left h1 { font:20px/20px Verdana; color:#fff;}
+.header-right { position:absolute; z-index:1; right:5px; top:0; color:#fff; text-align:right;}
+.header-right p { line-height:0.7em;}
+.header-right a { color:#fff; margin:0 5px;}
+.footer { height:20px; padding:5px; text-align:center; overflow:hidden; background:#e0ecff;}

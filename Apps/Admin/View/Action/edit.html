@@ -1,0 +1,25 @@
+{/*修改权限项*/}
+{__NOLAYOUT__}
+<form id="ff" method="post">
+    <p>
+        <label>名称:</label>
+        <input class="easyui-textbox" type="text" name="title" value='{$row.title}' data-options="required:true,width:220,height:28" />
+    </p>
+     <p>
+            <label >模块:</label>
+            <input class="easyui-textbox" type="text" name="module" value='{$arr[0]}' data-options="required:true,width:220,height:28" />
+        </p>
+         <p>
+            <label >控制器:</label>
+            <input class="easyui-textbox" type="text" name="controller" value='{$arr[1]}' data-options="required:true,width:220,height:28" />
+        </p>
+    <p>
+        <label >操作:</label>
+        <input class="easyui-textbox" type="text" name="action" value='{$arr[2]}' data-options="required:true,width:220,height:28" />
+    </p>
+    <p>
+        <label> </label>
+         <a id='submit' class="easyui-linkbutton" data-options="iconCls:'icon-ok'" >提交</a>
+    </p>
+</form>
+<include file="public:js:submit.js" />

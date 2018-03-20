@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div style="width:620px;height:480px;border:1px solid green;margin:20px auto;position:relative;">
+        <img src="./image/about_01.jpg" alt="验证码" style="width:320px;height:240px;display:block;margin:120px auto;"/>
+        <canvas id="mycanvas" style="border:1px solid blue;margin:80px 100px;position: absolute;top:0;left:0;">  </canvas>
+
+    </div>
+   <button id='btn'>确定</button>
+</body>
+</html>
+<script>
+var cwidth=420;
+var cheight=320;
+var pwidth=320;
+var pheight=240;
+
+var offsetWidth=(cwidth-pwidth)/2
+var offsetHeight=(cheight-pheight)/2;
+
+var imgfile="./image/about_01.jpg";
+
+var data=[]; //所有点和颜色数据
+var isSure=true;//是否已确定,如果已经确定就开始添加下一条数据
+ 
+ 
+var canvas = document.getElementById("mycanvas");
+canvas.width=cwidth;   //画布
+canvas.height=cheight;
+
+var context = canvas.getContext("2d");   //画笔
+
+canvas.onmousedown = function(e){
+    var x=e.pageX;
+    var y=e.pageY;
+    var $point=getPointOnCanvas(x,y);
+    var offset=[offsetWidth+pwidth,offsetHeight+pheight];
+    
+    if($point[0]>offsetWidth && $point[0]<offset[0] && $point[1]>offsetHeight && $point[1]<offset[1]){
+    if(isSure){
+        var tmp=[];
+        if($point[0]>cwidth/2){
+            //如果点击的是图片的右边
+            tmp=[$point[0],$point[1],cwidth,$point[1],'red'];
+        }else{
+            tmp=[$point[0],$point[1],0,$point[1],'red'];
+        }
+        data.push(tmp);
+        isSure=false;
+    }else{
+        var index=[data.length-1];
+        if($point[0]>cwidth/2){
+            //如果点击的是图片的右边
+            data[index][2]=cwidth;                    
+        }else{
+            data[index][2]=0;                    
+        }                
+        data[index][3]=$point[1];               
+    }
+    drawFromArray();
+           
+   }
+     
+    
+}
+//根据数组画所有的线
+function drawFromArray(){
+    context.clearRect(0,0,cwidth,cheight);//清除 
+    //drawImage(imgfile);
+    for(var i=0;i<data.length;i++){       
+        drawOne(data[i]);
+    }
+}
+
+//画出图片
+function drawImage(url){
+    var img=new Image();//构建img图像   
+    img.src=url;
+    context.drawImage(img,offsetWidth,offsetHeight,pwidth,pheight);
+}
+
+//根据一条数据画线
+function drawOne(info){
+    console.log(info);
+   
+    arc(info[0],info[1],5);
+    var ps=[ [ info[0], info[1] ]];
+    var nextX=info[0];
+    var nextY=info[1];
+    
+    if(info[0]>info[2]){
+        //向左画
+        nextX=offsetWidth/2;        
+    }else{
+        //向右画
+        nextX=cwidth-offsetWidth/2;
+        
+    }
+    ps.push([nextX,nextY]);
+    if(info[1]!=info[3]){       
+
+        ps.push([nextX,info[3]]);
+    } 
+   
+    ps.push([info[2],info[3]]);
+    line(ps,info[4]);
+}
+
+
+//画多个线段
+function line(points,color){
+    context.strokeStyle = color;
+    context.lineWidth=2;
+    context.beginPath();
+    context.moveTo(points[0][0],points[0][1] );
+    for(var i=1;i<points.length;i++){
+        context.lineTo(points[i][0],points[i][1] );
+    }
+   
+    context.stroke();
+    context.closePath();
+}
+
+//画圆点
+function arc(x,y,r){
+    context.beginPath();
+    context.arc(x,y,r,0,360,false);
+    context.fillStyle="red";
+    context.fill();
+    context.strokeStyle="yellow";
+    context.stroke();
+    context.closePath();
+}
+
+//获取鼠标点击的位置
+function getPointOnCanvas(x, y) {
+    var bbox =canvas.getBoundingClientRect();
+    console.log(bbox);
+    return [Math.round(x- bbox.left *(canvas.width / bbox.width)),
+    Math.round(y - bbox.top  * (canvas.height / bbox.height))
+    ];
+
+}
+
+var btn=document.getElementById('btn');
+btn.onclick=function(){
+    if(data.length<4){
+        isSure=true;
+    }else{
+        alert('最多画四条线');
+    }
+    
+}
+</script>

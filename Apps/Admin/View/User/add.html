@@ -1,0 +1,25 @@
+{/*添加用户项*/}
+{__NOLAYOUT__}
+    <form id="ff" method="post">
+        <p>
+            <label>用户名:</label>
+            <input class="easyui-textbox" type="text" name="username" data-options="width:220,height:28" />
+        </p>
+        <p>
+            <label >呢称:</label>
+            <input class="easyui-textbox" type="text" name="nkname"  data-options="width:220,height:28" />
+        </p>
+        <p>
+            <label >邮箱:</label>
+            <input class="easyui-textbox" type="text" name="email"  data-options="width:220,height:28" />
+        </p>
+        <p>
+            <label >用户组:</label>
+            <input class="easyui-textbox" type="text" name="groupid"  data-options="width:220,height:28" />
+        </p>
+        <p>
+            <label> </label>
+             <a id='submit' class="easyui-linkbutton" data-options="iconCls:'icon-ok'" >提交</a>
+        </p>
+    </form>
+	<include file="public:js:submit.js" />

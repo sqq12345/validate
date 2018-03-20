@@ -1,0 +1,26 @@
+{//菜单}
+
+    <table id='tab' class="easyui-datagrid"  data-options="url:'{:U('menu/getdb')}',fitColumns:true,singleSelect:true,toolbar: '#tool'
+">
+        <thead>
+            <tr>
+                <th data-options="field:'id',width:100">ID</th>                
+                <th data-options="field:'title',width:100">名称</th>
+                <th data-options="field:'sort',width:100">排序</th> 
+                <th data-options="field:'hidden',width:100">隐藏</th>                
+                <th data-options="field:'url',width:100">链接</th>
+                <th data-options="field:'icon',width:100">图标</th>                
+                <th data-options="field:'ctime',width:100"> 添加时间</th>
+                <th data-options="field:'utime',width:100">修改时间</th>
+            </tr>
+        </thead>
+    </table>
+
+    <div id="tool">
+        <a href="javascript:;" id="addbtn" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" >添加</a>
+        <a href="javascript:;"  id="editbtn" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" >修改</a>
+        <a href="javascript:;" id="delbtn" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">删除</a>
+    </div>
+
+     
+    
