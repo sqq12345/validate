@@ -5284,3 +5284,15 @@ INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000562s ]
 INFO: [ app_end ] --END-- [ RunTime:0.000606s ]
 
+[ 2018-03-20T19:08:48+08:00 ] 127.0.0.1 /index.php/Admin/Action/getdb.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000017s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000506s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000582s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000640s ]
+SQL: SHOW COLUMNS FROM `tp_users` [ RunTime:0.0161s ]
+SQL: SHOW COLUMNS FROM `tp_action` [ RunTime:0.0150s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `tp_action` LIMIT 1   [ RunTime:0.0013s ]
+SQL: SELECT * FROM `tp_action` LIMIT 0,10   [ RunTime:0.0014s ]
+
