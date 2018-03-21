@@ -36,7 +36,7 @@ var type='<?php echo ((isset($type) && ($type !== ""))?($type):"add"); ?>';
 $('#submit').linkbutton({
 	onClick:function(){
 		$('#ff').form('submit', {    
-		    url:'/index.php/Admin/Action/add.html?_=1521543015175',    
+		    url:'/index.php/Admin/Action/add.html?_=1521616627347',    
 		    onSubmit: function(param){    
 		          var isvalidate=$(this).form('validate');
 		          return isvalidate;

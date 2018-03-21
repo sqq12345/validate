@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2018-03-20 19:08:00
+Date: 2018-03-21 18:52:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,7 @@ CREATE TABLE `tp_action` (
   `url` varchar(50) NOT NULL,
   `title` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='后台操作';
 
 -- ----------------------------
 -- Records of tp_action
@@ -43,6 +43,38 @@ INSERT INTO tp_action VALUES ('12', '1521515719', '0', '0', 'admin/user/index', 
 INSERT INTO tp_action VALUES ('13', '1521515719', '0', '0', 'admin/user/add', '用户添加');
 INSERT INTO tp_action VALUES ('14', '1521515719', '0', '0', 'admin/user/edit', '用户编辑');
 INSERT INTO tp_action VALUES ('15', '1521515719', '0', '0', 'admin/user/del', '用户删除');
+INSERT INTO tp_action VALUES ('16', '1521616778', '0', '0', 'admin/image/index', '广告图片列表');
+INSERT INTO tp_action VALUES ('17', '1521616778', '0', '0', 'admin/image/add', '广告图片添加');
+INSERT INTO tp_action VALUES ('18', '1521616778', '0', '0', 'admin/image/edit', '广告图片编辑');
+INSERT INTO tp_action VALUES ('19', '1521616778', '0', '0', 'admin/image/del', '广告图片删除');
+
+-- ----------------------------
+-- Table structure for `tp_customers`
+-- ----------------------------
+DROP TABLE IF EXISTS `tp_customers`;
+CREATE TABLE `tp_customers` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ctime` int(10) unsigned NOT NULL,
+  `utime` int(10) unsigned NOT NULL,
+  `status` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '状态，0新注册 1邮箱验证 2已审核 3禁止登录',
+  `type` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '帐号类型 0广告发布员 1广告代理 2验证码制作者 3网站站长',
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `salt` varchar(8) NOT NULL,
+  `lasttime` int(10) unsigned NOT NULL COMMENT '最后登录时间',
+  `lastip` int(10) unsigned NOT NULL COMMENT '最后登录ip',
+  `name` varchar(25) NOT NULL COMMENT '姓名，要和银行卡一致',
+  `company` varchar(255) NOT NULL COMMENT '公司名',
+  `email` varchar(255) NOT NULL COMMENT '邮箱',
+  `phone` varchar(15) NOT NULL COMMENT '手机号',
+  `account` varchar(255) DEFAULT NULL COMMENT '银行卡号或支付宝微信帐号',
+  `account_info` varchar(255) DEFAULT NULL COMMENT '银行卡信息',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='前台用户';
+
+-- ----------------------------
+-- Records of tp_customers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `tp_group`
@@ -55,12 +87,13 @@ CREATE TABLE `tp_group` (
   `title` varchar(255) NOT NULL,
   `level` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='角色';
 
 -- ----------------------------
 -- Records of tp_group
 -- ----------------------------
 INSERT INTO tp_group VALUES ('1', '1513828879', '1519781094', '超级管理员', '');
+INSERT INTO tp_group VALUES ('2', '1521618399', '1521628318', '图片管理员', '16,17');
 
 -- ----------------------------
 -- Table structure for `tp_icons`
@@ -71,7 +104,7 @@ CREATE TABLE `tp_icons` (
   `name` varchar(30) NOT NULL,
   `path` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1514 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1514 DEFAULT CHARSET=utf8 COMMENT='图标';
 
 -- ----------------------------
 -- Records of tp_icons
@@ -1591,6 +1624,30 @@ INSERT INTO tp_icons VALUES ('1512', 'zoom-in', 'zoom_in.png');
 INSERT INTO tp_icons VALUES ('1513', 'zoom-out', 'zoom_out.png');
 
 -- ----------------------------
+-- Table structure for `tp_images`
+-- ----------------------------
+DROP TABLE IF EXISTS `tp_images`;
+CREATE TABLE `tp_images` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ctime` int(10) unsigned NOT NULL,
+  `utime` int(10) unsigned NOT NULL,
+  `status` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态，是否已通过审核，0表示没有，1表示通过',
+  `ctype` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '内容属性，0非成人类，1成人类',
+  `rtype` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '宗教属性，0非清真类，1清真类',
+  `name` varchar(255) NOT NULL COMMENT '图片地址',
+  `advertiser` int(10) unsigned NOT NULL COMMENT '广告商（上传者）',
+  `title` varchar(30) NOT NULL COMMENT '图片标题，写在验证码的下面',
+  `keyword` varchar(255) NOT NULL COMMENT '关键词用，隔开',
+  `url` varchar(255) NOT NULL COMMENT '广告链接地址',
+  `text` varchar(10) NOT NULL COMMENT '软文，放在验证码问题前',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片素材';
+
+-- ----------------------------
+-- Records of tp_images
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `tp_menu`
 -- ----------------------------
 DROP TABLE IF EXISTS `tp_menu`;
@@ -1607,15 +1664,21 @@ CREATE TABLE `tp_menu` (
   `remark` text,
   `icon` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of tp_menu
 -- ----------------------------
 INSERT INTO tp_menu VALUES ('1', '1513753458', '1516867835', '0', '0', '0', '0', '权限设置', '0', '', 'advancedsettings');
 INSERT INTO tp_menu VALUES ('2', '1513754024', '1516861907', '0', '0', '1', '0', '菜单', '1', '', 'book');
+INSERT INTO tp_menu VALUES ('36', '1521628102', '0', '0', '0', '34', '0', '审核用户', '0', '', 'user-accept16');
 INSERT INTO tp_menu VALUES ('7', '1513767509', '1521516731', '0', '0', '1', '0', '角色', '7', '', 'user-group');
 INSERT INTO tp_menu VALUES ('26', '1515377524', '1521516749', '0', '0', '1', '0', '用户', '12', '', 'user-gray');
+INSERT INTO tp_menu VALUES ('35', '1521628073', '0', '0', '0', '34', '0', '审核图片', '0', '', 'picture-error');
+INSERT INTO tp_menu VALUES ('34', '1521628012', '0', '0', '0', '0', '0', '审核', '0', '', 'advancedsettings');
+INSERT INTO tp_menu VALUES ('33', '1521616999', '1521617047', '0', '0', '32', '0', '广告图片', '16', '', 'box-picture');
+INSERT INTO tp_menu VALUES ('32', '1521616934', '1521617019', '0', '0', '0', '0', '广告设置', '0', '', 'advancedsettings');
+INSERT INTO tp_menu VALUES ('37', '1521628171', '1521628198', '0', '0', '34', '0', '审核验证码', '0', '', 'css-valid');
 
 -- ----------------------------
 -- Table structure for `tp_users`
@@ -1636,9 +1699,28 @@ CREATE TABLE `tp_users` (
   `lastip` varchar(15) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='后台用户';
 
 -- ----------------------------
 -- Records of tp_users
 -- ----------------------------
-INSERT INTO tp_users VALUES ('1', '1513435319', '0', '1', 'admin', 'c5f962dc1baafbda7f5e30d6a99594e3', 'Z2fD6yQ3', 'Admin', '1', 'admin@test.com', '1521542859', '127.0.0.1');
+INSERT INTO tp_users VALUES ('1', '1513435319', '0', '1', 'admin', 'c5f962dc1baafbda7f5e30d6a99594e3', 'Z2fD6yQ3', 'Admin', '1', 'admin@test.com', '1521612491', '127.0.0.1');
+
+-- ----------------------------
+-- Table structure for `tp_validate`
+-- ----------------------------
+DROP TABLE IF EXISTS `tp_validate`;
+CREATE TABLE `tp_validate` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ctime` int(10) unsigned NOT NULL,
+  `utime` int(10) unsigned NOT NULL,
+  `status` int(1) unsigned NOT NULL COMMENT '状态 0未审核   1已审核可以使用',
+  `img_id` int(10) unsigned NOT NULL COMMENT '在images表中的id',
+  `cid` int(10) unsigned NOT NULL COMMENT '验证码制作者的用户id',
+  `line` text NOT NULL COMMENT '线条信息',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='验证码';
+
+-- ----------------------------
+-- Records of tp_validate
+-- ----------------------------

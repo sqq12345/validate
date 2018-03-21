@@ -19,9 +19,9 @@ form .easyui-linkbutton{margin-left:200px;}
 ul.actions{width:400px;margin-left:100px;}
 ul.actions li{float:left;width:100px;margin:5px 0;}
 .uploadimages{overflow:hidden;list-style:none;padding:10px;}
-.uploadimages li{float:left;width:100px;height:100px;margin-left:10px;border:1px #333333 solid;padding:0;position:relative;}
-.uploadimages li>img{height:100px;width:100px;}
-.uploadimages li div{width:100px;height:100px;position:absolute;left:0;top:0;display:none;background:rgba(150,150,150,0.5);}
+.uploadimages li{float:left;height:240px;margin-left:10px;border:1px #333333 solid;padding:0;position:relative;}
+.uploadimages li>img{height:240px;width:320px;}
+.uploadimages li div{width:320px;height:240px;position:absolute;left:0;top:0;display:none;background:rgba(150,150,150,0.5);}
 .uploadimages li div img{width:30px;height:30px;position:absolute;top:-15px;right:-10px;}
 .uploadimages li:hover div{display:block;}
 

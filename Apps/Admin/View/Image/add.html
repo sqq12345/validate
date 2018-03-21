@@ -1,0 +1,65 @@
+{/*图片管理员添加图片*/}
+{__NOLAYOUT__}
+    <form id="ff" method="post">
+        <p>
+            <label>广告标题:</label>
+            <input class="easyui-textbox" type="text" name="title" data-options="width:220,height:28" />
+        </p>
+        <p>
+            <label >广告链接:</label>
+            http://<input class="easyui-textbox" type="text" name="url"  data-options="width:180,height:28" />
+        </p>
+        <p>
+            <label >图片说明:</label>
+            <input class="easyui-textbox" type="text" name="text"  data-options="width:220,height:28" />
+        </p>
+        <p>
+            <label >关键字:</label>
+            <input class="easyui-textbox" type="text" name="keyword"  data-options="width:220,height:28" />
+        	*多个关键词用|隔开
+        </p>
+        
+        <div>
+        
+        <label>图片:</label>
+        
+        <input type='file'  name="image[]"    /> 
+    </div>    
+     <div><ul class="uploadimages uploading"> </ul></div> 
+     *图片都会被缩放成320*240
+    <br>
+        <p>
+            <label> </label>
+             <a id='submit' class="easyui-linkbutton" data-options="iconCls:'icon-ok'" >提交</a>
+        </p>
+    </form>
+	<include file="public:js:submit.js" />
+	<script>
+$("input[type='file']").change(function(){
+	$('.uploading').children().remove();
+	j=0;
+	for(var i=0;i<this.files.length;i++){
+		  var file=this.files[i];
+		  if(window.FileReader){
+			  var fr=new FileReader();
+			  fr.readAsDataURL(file);
+			  fr.onloadend=function(e){
+				  var li="<li><img src='"+e.target.result+"' /><div><img src='img/fancy_close.png' /></div><input type='hidden' name='checking[]' value='"+j+"' /></li>";
+				  $('.uploading').append(li);
+				  j++;
+			  }
+		  }
+	}
+	
+});
+
+$(document).on('click',".uploadimages li div img",function(){
+	$(this).parent().parent().remove();	
+});
+
+
+
+
+
+</script>
+	

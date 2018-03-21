@@ -26,9 +26,9 @@ class Upload{
     function addImg(){
         $result=array();
         $upload = new tupload();
-        $upload->maxSize   =     3145728 ;// 设置附件上传大小
-        $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-        $upload->rootPath  =$this->rootPath; // 设置附件上传目录    // 上传文件
+        $upload->maxSize   =    204800; 
+        $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg'); 
+        $upload->rootPath  =$this->rootPath;  
         $info   =   $upload->upload();
         if($info){
             $arr=I('post.'.$this->checking);

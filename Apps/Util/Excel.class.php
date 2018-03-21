@@ -7,7 +7,7 @@ namespace Util;
 class Excel{
 	private $e;
 	private $s;	
-	private $ver='20170831';
+	private $ver='20150831';
 	private $sheetsum=1;	
 	function __construct($sheetIndex=0){
 		vendor('Excel.PHPExcel');		
@@ -81,7 +81,7 @@ class Excel{
 	}  
 	
 	 //设置样式的私有方法
-	private function setAllStyle($cell1,$cell2,$fontsize,$bold,$italic,$center,$color,$br,$fillrgb){
+	private function setAllStyle($cell1,$cell2,$fontsize,$bold,$italic,$align,$color,$br,$fillrgb){
 		$sty=$this->s->getstyle($cell1);
 			//字体
 		$font=$sty->getFont();
@@ -90,18 +90,20 @@ class Excel{
 		$font->setItalic($italic);
 		$font->getColor()->setARGB($color);
 			//对齐方式
-		$alig=$sty->getAlignment();
-		$alig->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-		if ($center=="L"){
+		$alig=$sty->getAlignment();		
+		if ($align=="L"){
 			$alig->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-		}
-		if ($center=="R"){
+		}elseif ($align=="R"){
 			$alig->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+		}else{
+		    $alig->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		}
 		$alig->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
-
+        
+		//var_dump($br);
 		//边框
 		if ($br){
+		    
 			$border=$sty->getBorders();
 			$border->getTop()->setBorderStyle(\PHPExcel_Style_Border::BORDER_THIN);
 			$border->getBottom()->setBorderStyle(\PHPExcel_Style_Border::BORDER_THIN);
@@ -178,9 +180,7 @@ class Excel{
 	function setValue($cell,$value,$style=false){
 		$this->s->setCellValue ($cell,$value);
 		if($style){
-			if($this->is_assoc($style)){
-				$this->setStyle($cell,$cell,$style);
-			}
+			$this->setStyle($cell,$cell,$style);			 
 		}
 	}
 	
@@ -206,10 +206,9 @@ class Excel{
 				
 				$row++;
 			}
-			if($style){
-				if($this->is_assoc($style)){
-					$this->setStyle($cell,$pc,$style);
-				}	
+			if($style){				 
+				$this->setStyle($cell,$pc,$style);
+				 	
 			}
 			
 		}
@@ -223,7 +222,7 @@ class Excel{
 	 * 设置样式 
 	 * @param string $cell1  起始单元格
 	 * @param string $cell2 结束单元格
-	 * @param array $style 样式数组fontsize,bold,italic,center,color,border,bgcolor
+	 * @param array $style 样式数组fontsize,bold,italic,align,color,border,bgcolor
 	 * 
 	 */
 	function setStyle($cell1,$cell2,$style){
@@ -231,76 +230,17 @@ class Excel{
 			$fontsize=isset($style['fontsize'])?$style['fontsize']:12;
 			$bold=isset($style['bold'])?$style['bold']:false;
 			$italic=isset($style['italic'])?$style['italic']:false;
-			$center=isset($style['center'])?$style['center']:'C';
+			$center=isset($style['align'])?$style['align']:'C';
 			$color=isset($style['color'])?$style['color']:0;
 			$border=isset($style['border'])?$style['border']:false;
-			$bgcolor=isset($style['bgcolor'])?$style['bgcolor']:false;			
+			$bgcolor=isset($style['bgcolor'])?$style['bgcolor']:false;	
+			 
+			$center=strtoupper($center);
 			$this->setAllStyle($cell1,$cell2,$fontsize,$bold,$italic,$center,$color,$border,$bgcolor);
 		}
 		
 		
-	}	
-	 
+	}
+	
+	
 }
-
-
-/*  使用方法
-  $myxls=new wrexcel();
-			$myxls->setWidth ('a', 18 );
-			$myxls->setWidth ( 'b',15 );
-			$myxls->setWidth ( 'c',18 );
-			$myxls->setWidth ( 'd',15 );
-			$myxls->setWidth ( 'e',18 );
-			$myxls->setWidth ('f', 18 );
-			$myxls->setWidth ('g', 45 );
-			$myxls->setWidth ( 'h',15 );
-			$myxls->setWidth ( 'i',15 );
-			$myxls->setWidth ( 'j',15 );
-			$myxls->setWidth ( 'k',15 );
-			$myxls->setWidth ('l', 15);
-			$myxls->mergeCells ( 'A1','L1' );
-			$btt =$trq. "订单日报表";
-			$myxls->setValue ( 'A1', $btt,$this->btstyle0 );
-			//$myxls->setAllStyle ('A1', 'A1', 22, true );
-			
-			$myxls->setValue ( 'A2', "时间"  );
-			$myxls->setValue ( 'B2',  "订单类型"  );
-			$myxls->setValue ( 'C2', "订单号"  );
-			$myxls->setValue ( 'D2', "客户"  );
-			$myxls->setValue ( 'E2', "客户编号"  );
-			$myxls->setValue ( 'F2',  "香港编号"  );
-			$myxls->setValue ( 'G2', "纱种"  );
-			$myxls->setValue ( 'H2', "数量"  );
-			$myxls->setValue ( 'I2',  "今日进仓"  );
-			$myxls->setValue ( 'J2', "今日出仓"  );			
-			$myxls->setValue ( 'K2',  "累计进仓"  );
-			$myxls->setValue ( 'L2', "累计出仓"  );
-			//$myxls->setAllStyle ( 'A2', 'L2', 14, true,false, "C", "0","Y" );
-			$myxls->setStyle ( 'A2', 'L2',$this->btstyle1 );
-			$nr=$myxls->setData('A3',$data,$this->mstyle);
-			$pc='L'.($nr-1);
-			//$myxls->setAllStyle ( 'A3', $pc, 12, 0,0, "C", "0","Y" );
-			$pc='G'.$nr;
-			$myxls->setValue ( $pc, "合计："  );
-			
-			$nr1=$nr-1;
-			
-			$pc='H'.$nr;
-			$myxls->setValue ( $pc, "=SUM(H3:H".$nr1.")" );
-			
-			$pc='I'.$nr;
-			$myxls->setValue ( $pc, "=SUM(I3:I".$nr1.")" );
-			
-			$pc='J'.$nr;
-			$myxls->setValue ( $pc, "=SUM(J3:J".$nr1.")" );
-			
-			$pc='K'.$nr;
-			$myxls->setValue ( $pc, "=SUM(K3:K".$nr1.")" );
-			
-			$pc='L'.$nr;
-			$myxls->setValue ( $pc, "=SUM(L3:L".$nr1.")" );
-			//$myxls->setAllStyle ( "A{$nr}", $pc, 14, true,true, "C", "0","Y" );
-			$myxls->setStyle ( "A{$nr}", $pc,$this->hjsyle );
-			$myxls->output('order_statements('.date('Y-m-d').').xls');
-   
-   */
