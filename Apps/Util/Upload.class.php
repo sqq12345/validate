@@ -5,18 +5,19 @@ use Think\Upload as tupload;
  * 调用ThinkPHP上传、确认、删除图片 
  * 
  * @author fzf 2017/12/21
- *
+ * enctype="multipart/form-data"
  */
 class Upload{
     public $rootPath='Public/Uploads/';
     public $checked='checked';
     public $checking='checking';
      
-    
-    function __construct(){
+    private $maxsize;
+    function __construct($maxSize=1048576){
         if(!is_dir($this->rootPath)){
             mkdir($this->rootPath,777,true);
         }
+        $this->maxsize=$maxSize;
     }
     
     /**
@@ -26,7 +27,7 @@ class Upload{
     function addImg(){
         $result=array();
         $upload = new tupload();
-        $upload->maxSize   =    204800; 
+        $upload->maxSize   =    $this->maxsize; 
         $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg'); 
         $upload->rootPath  =$this->rootPath;  
         $info   =   $upload->upload();

@@ -3,16 +3,15 @@
  /**
   *  显示窗口
   */
- function showWin(url,width,height){
-	 width=width?width:800;
-	 height=height?height:800;
-	 $('#win').window({
-		 width:width,
-		 heigth:height,
-		 
-	 });
- 	$('#win').window('refresh', url);  
+ function showWin(url,title){
+	 if(title){ 		
+ 		$('#win').window({title:title});
+ 	}
+ 	  
  	$('#win').window('open'); 
+ 	$('#win').window('refresh', url);
+ 	$('#win').window('maximize');
+ 	
  	
  }
  
@@ -55,7 +54,7 @@
          var currow = $('#tab').datagrid("getSelected");
          if (currow != null) {
          	var url = "__CONTROLLER__/edit/id/" + currow.id;
-         	showWin(url);
+         	showWin(url,'修改');
          } else {
              $.messager.alert('错了', "请先选中一行！", 'warning');
          }
@@ -65,7 +64,7 @@
  $('#addbtn').linkbutton({
  	onClick:function(){
  		var url="{:U('add')}";
- 		showWin(url);
+ 		showWin(url,'添加');
  	}
  	
  });

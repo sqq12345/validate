@@ -21,7 +21,7 @@
 </head>
 <body>
 <div id="win" class="easyui-window" data-options="iconCls:'icon-add',modal:true,closed:true,title:'操作',collapsible:false,minimizable:false,
-			maximizable:false,width:600,height:400"></div>   
+			maximizable:false,width:800,height:800"></div>   
  
 
 
@@ -56,16 +56,15 @@
  /**
   *  显示窗口
   */
- function showWin(url,width,height){
-	 width=width?width:600;
-	 height=height?height:400;
-	 $('#win').window({
-		 width:width,
-		 heigth:height,
-		 
-	 });
- 	$('#win').window('refresh', url);  
+ function showWin(url,title){
+	 if(title){ 		
+ 		$('#win').window({title:title});
+ 	}
+ 	  
  	$('#win').window('open'); 
+ 	$('#win').window('refresh', url);
+ 	$('#win').window('maximize');
+ 	
  	
  }
  
@@ -108,7 +107,7 @@
          var currow = $('#tab').datagrid("getSelected");
          if (currow != null) {
          	var url = "/index.php/Admin/Menu/edit/id/" + currow.id;
-         	showWin(url);
+         	showWin(url,'修改');
          } else {
              $.messager.alert('错了', "请先选中一行！", 'warning');
          }
@@ -118,7 +117,7 @@
  $('#addbtn').linkbutton({
  	onClick:function(){
  		var url="<?php echo U('add');?>";
- 		showWin(url);
+ 		showWin(url,'添加');
  	}
  	
  });

@@ -93,6 +93,25 @@ class BaseController extends Controller {
             
         }
     }
+    
+    /**
+     * 根据提供的值修改数组中某个字段的值
+     * @param array $data
+     * @param array $arr
+     */
+    protected function setValue(&$data,$arr){
+        foreach($data as &$row){
+            foreach($arr as $k=>$v){
+                if(isset($row[$k])&&isset($v[$row[$k]])){
+                    $row[$k]=$v[$row[$k]];
+                    
+                }
+            }
+             
+        }
+        
+        
+    }
     protected function getJson($code=0,$msg='',$url=''){
         $arr=array(
              

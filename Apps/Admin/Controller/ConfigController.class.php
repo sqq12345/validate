@@ -1,9 +1,41 @@
 <?php
 namespace Admin\Controller;
 use Util\Excel;
+use Util\Upload;
 class ConfigController extends BaseController {
+    
+    
     function index(){
+        //站点配置
+        if(IS_POST){
+            $up=new Upload(204800);
+            $arr=$up->addImg();
+            if($arr){
+                $_POST['logo']=$arr[0];
+            }
+            unset($_POST['checking']);
+           $this->setConfig(I('post.'));
+           echo 'y';
+           die;
+        }
+        $row=getConfig('web_title,web_keywords,web_address,web_tel,web_email,web_beian,web_description,logo');
+        //print_r($row);die;
+        $this->assign('row',$row);
         $this->display();
+    }
+    
+    private function setConfig($data){
+        $tb=M('config');
+        foreach($data as $k=>$v){
+            $i=$tb->where(array('name'=>$k))->count();
+            if($i>0){
+                $tb->where(array('name'=>$k))->save(array('value'=>$v));
+            }else{
+                $tb->add(array('name'=>$k,'value'=>$v));
+            }
+            
+        } 
+        
     }
     
     /**

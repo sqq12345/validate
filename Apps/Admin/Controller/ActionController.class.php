@@ -28,12 +28,13 @@ class ActionController extends BaseController {
         if(IS_POST){            
             $_POST['ctime']=time();
             $arr=explode('|',I('post.other'));            
-            $arr=array_merge(I('post.actions'),$arr);
+            $arr=array_merge(I('post.actions',array()),$arr);
             $module=I('post.module');
             $controller=I('post.controller');
             $title=I('post.title');
             $time=time();
             $data=array();
+             
             if($arr){
                 foreach($arr as $v){
                     if(!empty($v)){

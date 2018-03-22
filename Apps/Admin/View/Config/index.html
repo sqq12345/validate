@@ -1,0 +1,103 @@
+{//站点设置}
+<form id="ff" method="post" enctype="multipart/form-data">
+<p>
+    <label>网站标题:</label>
+    <input class="easyui-textbox" type="text" name="web_title"  value="{$row.web_title}" data-options="width:360,height:28" />
+</p>
+<p>
+    <label>网站关键词:</label>
+    <input class="easyui-textbox" type="text" name="web_keywords"  value="{$row.web_keywords}" data-options="width:360,height:28" />
+</p>
+<p>
+    <label>公司地址:</label>
+    <input class="easyui-textbox" type="text" name="web_address"  value="{$row.web_address}" data-options="width:360,height:28" />
+</p>
+ <p>
+    <label>电话号码:</label>
+    <input class="easyui-textbox" type="text" name="web_tel"  value="{$row.web_tel}" data-options="width:360,height:28" />
+</p>
+<p>
+    <label>公司邮箱:</label>
+    <input class="easyui-textbox" type="text" name="web_email"  value="{$row.web_email}" data-options="width:360,height:28" />
+</p>
+<p>
+    <label>备案信息:</label>
+    <input class="easyui-textbox" type="text" name="web_beian"  value="{$row.web_beian}" data-options="width:360,height:28" />
+</p>
+<p>
+    <label>介绍信息:</label>
+    <input class="easyui-textbox" type="text" name="web_description"  value="{$row.web_description}" data-options="multiline:true,width:360,height:100" />
+</p>
+<p>
+    <label>公司LOGO:</label>
+    <img src="/{$row.logo}" title="logo" alt="正在加载..." width="150px" />
+</p>
+ <div>        
+    <label>图片:</label>	        
+    <input type='file'  name="image[]" /> 
+</div>    
+<div><ul class="uploadmin uploading"> </ul></div>
+ <p>
+    <label></label>
+   
+    <a id='submit' class="easyui-linkbutton" data-options="iconCls:'icon-ok'" >提交</a>
+</p>
+</form>
+
+ 
+<script>
+$("input[type='file']").change(function(){
+	$('.uploading').children().remove();
+	j=0;
+	for(var i=0;i<this.files.length;i++){
+		  var file=this.files[i];
+		  if(window.FileReader){
+			  var fr=new FileReader();
+			  fr.readAsDataURL(file);
+			  fr.onloadend=function(e){
+				  var len=e.target.result.length/1365;
+				  if(len>200){
+					  layer.msg('图片超过200KB，不能上传此图片');
+				  }				  
+				  var li="<li><img src='"+e.target.result+"' /><div><img src='img/fancy_close.png' /></div><input type='hidden' name='checking[]' value='"+j+"' /></li>";
+				  $('.uploading').append(li);
+				  j++;
+			  }
+		  }
+	}
+	
+});
+
+$(document).on('click',".uploadimages li div img",function(){
+	$(this).parent().parent().remove();	
+});
+
+ 
+//添加修改表单提交
+ 
+$('#submit').linkbutton({
+	onClick:function(){
+		$('#ff').form('submit', {    
+		    url:'__SELF__',    
+		    onSubmit: function(param){    
+		           
+		    },    
+		    success:function(data){		    	 
+		   		if(data=='y'){
+		   			layer.msg('修改成功了'); 		   			
+		   		}else{
+		   			layer.msg(data); 
+		   		} 
+		    }    
+		});  
+
+		
+	}
+});
+ 
+
+
+</script>
+	
+
+

@@ -1,36 +1,50 @@
 {/*图片管理员添加图片*/}
 {__NOLAYOUT__}
-    <form id="ff" method="post">
+    <form id="ff" method="post" enctype="multipart/form-data">
         <p>
             <label>广告标题:</label>
-            <input class="easyui-textbox" type="text" name="title" data-options="width:220,height:28" />
+            <input class="easyui-textbox" type="text" name="title" data-options="width:360,height:28,validType:'length[0,30]'" />
         </p>
         <p>
             <label >广告链接:</label>
-            http://<input class="easyui-textbox" type="text" name="url"  data-options="width:180,height:28" />
+            http://<input class="easyui-textbox" type="text" name="url"  data-options="width:320,height:28"  />
         </p>
         <p>
             <label >图片说明:</label>
-            <input class="easyui-textbox" type="text" name="text"  data-options="width:220,height:28" />
+            <input class="easyui-textbox" type="text" name="text"  data-options="width:360,height:28,validType:'length[0,10]'" />
         </p>
         <p>
-            <label >关键字:</label>
-            <input class="easyui-textbox" type="text" name="keyword"  data-options="width:220,height:28" />
-        	*多个关键词用|隔开
+            <label >关键词:</label>
+            <input class="easyui-textbox" type="text" name="keyword"  data-options="width:360,height:28" />
         </p>
-        
-        <div>
-        
-        <label>图片:</label>
-        
-        <input type='file'  name="image[]"    /> 
-    </div>    
-     <div><ul class="uploadimages uploading"> </ul></div> 
-     *图片都会被缩放成320*240
+         <p>
+            <label >内容属性:</label>
+            <select  class="easyui-combobox" name="ctype" style="width:200px;">   
+			    <option value="0">非成人</option>  
+			    <option value="1">成人</option>
+			</select>  
+            
+           
+        </p>
+         <p>
+            <label >宗教属性:</label>
+             <select  class="easyui-combobox" name="rtype" style="width:200px;">   
+			    <option value="0">无</option>  
+			    <option value="1">非清真</option>
+			    <option value="2">清真</option>
+			</select>
+        </p>
+        <div>        
+	        <label>图片:</label>	        
+	        <input type='file'  name="image[]"    /> 
+	    </div>    
+	    <div><ul class="uploadimages uploading"> </ul></div>
+     
     <br>
         <p>
             <label> </label>
-             <a id='submit' class="easyui-linkbutton" data-options="iconCls:'icon-ok'" >提交</a>
+            <span style="color:red;">*图片都会被缩放成320*240，多个关键词用|隔开</span>
+            <a id='submit' class="easyui-linkbutton" data-options="iconCls:'icon-ok'" >提交</a>
         </p>
     </form>
 	<include file="public:js:submit.js" />
@@ -44,6 +58,11 @@ $("input[type='file']").change(function(){
 			  var fr=new FileReader();
 			  fr.readAsDataURL(file);
 			  fr.onloadend=function(e){
+				  var len=e.target.result.length/1365;
+				  if(len>200){
+					  layer.msg('图片超过200KB，不能上传此图片');
+				  }
+				  
 				  var li="<li><img src='"+e.target.result+"' /><div><img src='img/fancy_close.png' /></div><input type='hidden' name='checking[]' value='"+j+"' /></li>";
 				  $('.uploading').append(li);
 				  j++;
