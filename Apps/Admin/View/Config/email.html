@@ -1,0 +1,64 @@
+{//邮件设置}
+
+ 
+<form id="ff" method="post" enctype="multipart/form-data">
+<p>
+    <label>SMTP服务器:</label>
+    <input class="easyui-textbox" type="text" name="mail_host"  value="{$row.mail_host}" data-options="width:360,height:28" />
+</p>
+<p>
+    <label>SMTP端口:</label>
+    <input class="easyui-textbox" type="text" name="mail_port"  value="{$row.mail_port}" data-options="width:360,height:28" />
+</p>
+<p>
+    <label>用户名:</label>
+    <input class="easyui-textbox" type="text" name="mail_username"  value="{$row.mail_username}" data-options="width:360,height:28" />
+</p>
+ <p>
+    <label>密码:</label>
+    <input class="easyui-textbox" type="password" name="mail_pwd"  value="{$row.mail_pwd}" data-options="width:360,height:28" />
+</p>
+
+<p>
+    <label>发件人:</label>
+    <input class="easyui-textbox" type="text" name="mail_fromname"  value="{$row.mail_fromname}" data-options="width:360,height:28" />
+</p>
+ 
+ <p>
+    <label></label>
+   
+    <a id='submit' class="easyui-linkbutton" data-options="iconCls:'icon-ok'" >提交</a>
+</p>
+</form>
+
+ 
+<script>
+ 
+//添加修改表单提交
+ 
+$('#submit').linkbutton({
+	onClick:function(){
+		$('#ff').form('submit', {    
+		    url:'__SELF__',    
+		    onSubmit: function(param){    
+		           
+		    },    
+		    success:function(data){		    	 
+		   		if(data=='y'){
+		   			layer.msg('修改成功了'); 		   			
+		   		}else{
+		   			layer.msg(data); 
+		   		} 
+		    }    
+		});  
+
+		
+	}
+});
+ 
+
+
+</script>
+	
+
+

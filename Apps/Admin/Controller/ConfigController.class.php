@@ -2,9 +2,7 @@
 namespace Admin\Controller;
 use Util\Excel;
 use Util\Upload;
-class ConfigController extends BaseController {
-    
-    
+class ConfigController extends BaseController {    
     function index(){
         //站点配置
         if(IS_POST){
@@ -24,6 +22,36 @@ class ConfigController extends BaseController {
         $this->display();
     }
     
+    
+    function email(){
+       //邮件配置
+        if(IS_POST){            
+            $this->setConfig(I('post.'));
+            echo 'y';
+            die;
+        }
+        $row=getConfig('mail_host,mail_port,mail_username,mail_pwd,mail_from,mail_fromname');
+        $this->assign('row',$row);
+        $this->display();  
+    }
+    
+    
+    function advert(){
+        //广告配置
+        
+        if(IS_POST){
+        
+            $this->setConfig(I('post.'));
+            echo 'y';
+            die;
+        }
+        $row=getConfig('');
+        $this->assign('row',$row);
+        $this->display();
+        
+    }   
+    
+    //将用户提交的设置信息提交到数据库
     private function setConfig($data){
         $tb=M('config');
         foreach($data as $k=>$v){

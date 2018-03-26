@@ -83,7 +83,7 @@
          	
          	layer.confirm('确定要删除吗？删除后不可恢复。', {icon:3,title: '删除'}, 
      		function(index){
-         		var url = "/index.php/Admin/User/del/id/" + currow.id;
+         		var url = "/fzf/index.php/Admin/User/del/id/" + currow.id;
          		
          		$.post(url,function(data){
          			 							  	    			    	
@@ -105,7 +105,7 @@
      onClick: function () {
          var currow = $('#tab').datagrid("getSelected");
          if (currow != null) {
-         	var url = "/index.php/Admin/User/edit/id/" + currow.id;
+         	var url = "/fzf/index.php/Admin/User/edit/id/" + currow.id;
          	showWin(url,'修改');
          } else {
              $.messager.alert('错了', "请先选中一行！", 'warning');
