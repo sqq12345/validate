@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2018-03-21 18:52:19
+Date: 2018-03-26 09:34:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,7 @@ CREATE TABLE `tp_action` (
   `url` varchar(50) NOT NULL,
   `title` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='后台操作';
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='后台操作';
 
 -- ----------------------------
 -- Records of tp_action
@@ -47,6 +47,33 @@ INSERT INTO tp_action VALUES ('16', '1521616778', '0', '0', 'admin/image/index',
 INSERT INTO tp_action VALUES ('17', '1521616778', '0', '0', 'admin/image/add', '广告图片添加');
 INSERT INTO tp_action VALUES ('18', '1521616778', '0', '0', 'admin/image/edit', '广告图片编辑');
 INSERT INTO tp_action VALUES ('19', '1521616778', '0', '0', 'admin/image/del', '广告图片删除');
+INSERT INTO tp_action VALUES ('21', '1521703503', '1521703539', '0', 'admin/config/index', '设置站点');
+INSERT INTO tp_action VALUES ('22', '1521703503', '1521703549', '0', 'admin/config/email', '设置邮件');
+INSERT INTO tp_action VALUES ('23', '1521703503', '1521703560', '0', 'admin/config/advert', '设置广告');
+
+-- ----------------------------
+-- Table structure for `tp_config`
+-- ----------------------------
+DROP TABLE IF EXISTS `tp_config`;
+CREATE TABLE `tp_config` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL COMMENT '设置项名',
+  `value` text NOT NULL COMMENT '设置项的值',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='设置';
+
+-- ----------------------------
+-- Records of tp_config
+-- ----------------------------
+INSERT INTO tp_config VALUES ('1', 'web_title', '验证码');
+INSERT INTO tp_config VALUES ('2', 'web_keywords', '验证码，验证码制作');
+INSERT INTO tp_config VALUES ('3', 'web_address', '武汉市鲁磨路');
+INSERT INTO tp_config VALUES ('4', 'web_tel', '027-12345678');
+INSERT INTO tp_config VALUES ('5', 'web_email', 'admin@admin.com');
+INSERT INTO tp_config VALUES ('6', 'web_description', '提供网站登录验证服务');
+INSERT INTO tp_config VALUES ('7', 'checking', '');
+INSERT INTO tp_config VALUES ('8', 'logo', 'Public/Uploads/2018-03-22/5ab3734bd5da8.jpg');
+INSERT INTO tp_config VALUES ('9', 'web_beian', '020202020');
 
 -- ----------------------------
 -- Table structure for `tp_customers`
@@ -1633,7 +1660,7 @@ CREATE TABLE `tp_images` (
   `utime` int(10) unsigned NOT NULL,
   `status` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态，是否已通过审核，0表示没有，1表示通过',
   `ctype` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '内容属性，0非成人类，1成人类',
-  `rtype` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '宗教属性，0非清真类，1清真类',
+  `rtype` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '宗教属性，0无 1非清真类 2清真类',
   `name` varchar(255) NOT NULL COMMENT '图片地址',
   `advertiser` int(10) unsigned NOT NULL COMMENT '广告商（上传者）',
   `title` varchar(30) NOT NULL COMMENT '图片标题，写在验证码的下面',
@@ -1641,11 +1668,13 @@ CREATE TABLE `tp_images` (
   `url` varchar(255) NOT NULL COMMENT '广告链接地址',
   `text` varchar(10) NOT NULL COMMENT '软文，放在验证码问题前',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图片素材';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='图片素材';
 
 -- ----------------------------
 -- Records of tp_images
 -- ----------------------------
+INSERT INTO tp_images VALUES ('2', '1521698285', '0', '0', '0', '0', 'Public/Uploads/2018-03-22/5ab345ed82631.jpg', '0', '这是一个例子1', '房子|草地', 'www.baidu.com', '这是一个例子1');
+INSERT INTO tp_images VALUES ('3', '1521698313', '1521698339', '0', '0', '0', 'Public/Uploads/2018-03-22/5ab34623303b0.jpg', '0', '这是一个例子2', '二维码', '', '这是一个例子1');
 
 -- ----------------------------
 -- Table structure for `tp_menu`
@@ -1664,12 +1693,12 @@ CREATE TABLE `tp_menu` (
   `remark` text,
   `icon` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COMMENT='菜单';
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COMMENT='菜单';
 
 -- ----------------------------
 -- Records of tp_menu
 -- ----------------------------
-INSERT INTO tp_menu VALUES ('1', '1513753458', '1516867835', '0', '0', '0', '0', '权限设置', '0', '', 'advancedsettings');
+INSERT INTO tp_menu VALUES ('1', '1513753458', '1521703762', '0', '0', '0', '0', '权限', '0', '', 'advancedsettings');
 INSERT INTO tp_menu VALUES ('2', '1513754024', '1516861907', '0', '0', '1', '0', '菜单', '1', '', 'book');
 INSERT INTO tp_menu VALUES ('36', '1521628102', '0', '0', '0', '34', '0', '审核用户', '0', '', 'user-accept16');
 INSERT INTO tp_menu VALUES ('7', '1513767509', '1521516731', '0', '0', '1', '0', '角色', '7', '', 'user-group');
@@ -1677,8 +1706,12 @@ INSERT INTO tp_menu VALUES ('26', '1515377524', '1521516749', '0', '0', '1', '0'
 INSERT INTO tp_menu VALUES ('35', '1521628073', '0', '0', '0', '34', '0', '审核图片', '0', '', 'picture-error');
 INSERT INTO tp_menu VALUES ('34', '1521628012', '0', '0', '0', '0', '0', '审核', '0', '', 'advancedsettings');
 INSERT INTO tp_menu VALUES ('33', '1521616999', '1521617047', '0', '0', '32', '0', '广告图片', '16', '', 'box-picture');
-INSERT INTO tp_menu VALUES ('32', '1521616934', '1521617019', '0', '0', '0', '0', '广告设置', '0', '', 'advancedsettings');
+INSERT INTO tp_menu VALUES ('32', '1521616934', '1521703837', '0', '0', '0', '0', '图片和验证码', '0', '', 'advancedsettings');
 INSERT INTO tp_menu VALUES ('37', '1521628171', '1521628198', '0', '0', '34', '0', '审核验证码', '0', '', 'css-valid');
+INSERT INTO tp_menu VALUES ('38', '1521703600', '0', '0', '0', '0', '0', '设置', '0', '', 'advancedsettings');
+INSERT INTO tp_menu VALUES ('39', '1521703653', '0', '0', '0', '38', '0', '基础设置', '21', '', 'advancedsettings');
+INSERT INTO tp_menu VALUES ('40', '1521703699', '1521703777', '0', '0', '38', '0', '邮件设置', '22', '', 'email');
+INSERT INTO tp_menu VALUES ('41', '1521703731', '1521703786', '0', '0', '38', '0', '广告设置', '23', '', 'advancedsettings2');
 
 -- ----------------------------
 -- Table structure for `tp_users`
@@ -1704,7 +1737,7 @@ CREATE TABLE `tp_users` (
 -- ----------------------------
 -- Records of tp_users
 -- ----------------------------
-INSERT INTO tp_users VALUES ('1', '1513435319', '0', '1', 'admin', 'c5f962dc1baafbda7f5e30d6a99594e3', 'Z2fD6yQ3', 'Admin', '1', 'admin@test.com', '1521612491', '127.0.0.1');
+INSERT INTO tp_users VALUES ('1', '1513435319', '0', '1', 'admin', 'c5f962dc1baafbda7f5e30d6a99594e3', 'Z2fD6yQ3', 'Admin', '1', 'admin@test.com', '1521700428', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for `tp_validate`
