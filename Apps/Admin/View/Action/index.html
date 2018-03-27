@@ -1,6 +1,6 @@
 {//权限}
 
-<table id='tab' class="easyui-datagrid"  data-options="url:'{:U('getdb')}',pagination:true,fitColumns:true,singleSelect:true,toolbar: '#tool'">
+<table id='tab' class="easyui-datagrid"  data-options="url:'__SELF__',pagination:true,fitColumns:true,singleSelect:true,toolbar: '#tool'">
     <thead>
         <tr>
             <th data-options="field:'id',width:100">ID</th> 
@@ -17,5 +17,18 @@
     <a id='addbtn' class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" >添加</a>
     <a id='editbtn' class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" >修改</a>
     <a id='delbtn' class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true">删除</a>
+	<input  class="easyui-searchbox" style="width:150px" data-options="searcher:doSearch" />
 </div> 
 
+<script>
+function doSearch(){
+	var findstr=$(this).searchbox('getValue');
+	 
+	if(findstr.length>0){
+		$('#tab').datagrid({
+			url:"__ACTION__/finds/"+findstr,
+		});
+	}
+	
+}
+</script>

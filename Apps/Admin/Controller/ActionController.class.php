@@ -10,19 +10,30 @@ class ActionController extends BaseController {
         'del'=>'删除',
     );
     public function index(){
+        if(IS_AJAX){
+            $where=I('get.finds','');
+            if(!empty($where)){
+                $where=array(
+                    'title'=>array('like',"%$where%"),
+                    'url'=>array('like',"%$where%"),
+                    '_logic'=>'or'
+                );
+            }
+            $action=M('action');
+            $total=$action->where($where)->count();
+            $rows=M('action')->where($where)->page(I('post.page',1),I('post.rows',10))->select();
+            $this->setDate($rows);
+            $this->ajaxReturn(array('total'=>$total,'rows'=>$rows));
+            die;
+            
+        }
+        
         $this->assign('title','操作表');
         $this->display();
         
     }
 
-    public function getdb(){
-        $action=M('action');
-        $total=$action->count();        
-        $rows=M('action')->page(I('post.page',1),I('post.rows',10))->select();
-        $this->setDate($rows);
-        $this->ajaxReturn(array('total'=>$total,'rows'=>$rows));
-
-    }
+   
 
     function add(){
         if(IS_POST){            
